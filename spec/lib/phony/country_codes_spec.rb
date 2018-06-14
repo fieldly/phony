@@ -5,19 +5,19 @@ describe Phony::CountryCodes do
   before(:all) do
     @countries = Phony::CountryCodes.instance
   end
-  
+
   describe '#[]' do
     it 'returns a country' do
       @countries['41'].class.should eql Phony::Country
     end
   end
-  
+
   describe '#country_for' do
     it 'returns a country' do
       @countries.send(:country_for, '41').class.should eql Phony::Country
     end
   end
-  
+
   describe '#countrify' do
     it 'returns a country' do
       @countries.send(:countrify, '441231212', '41').should eql '41441231212'
@@ -27,11 +27,11 @@ describe Phony::CountryCodes do
     it 'in-place replaces the number' do
       number = '441231212'
       @countries.send(:countrify!, number, '41').should eql number
-      
+
       number.should == '41441231212'
     end
   end
-  
+
   describe '#vanity?' do
     it 'returns true if so' do
       @countries.vanity?('1800HELLOES').should eql true
@@ -173,6 +173,13 @@ describe Phony::CountryCodes do
           Phony.formatted('4233841148', :format => :international_relative, :spaces => '').should eql '004233841148'
         end
       end
+
+      context 'norway' do
+        it 'does not use prfix' do
+          @countries.normalize('+4701234567').should eql '4701234567'
+        end
+      end
+
       context 'with special spaces' do
         it "should format swiss numbers" do
           Phony.formatted('41443643532', :format => :international).should eql '+41 44 364 35 32'

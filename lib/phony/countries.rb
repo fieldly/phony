@@ -169,6 +169,7 @@ Phony.define do
   # Norway.
   #
   country '47',
+          trunk('', :normalize => false) |
           none >> matched_split(/^[1].*$/   => [3],
                                 /^[489].*$/ => [3,2,3],
                                 :fallback   => [2,2,2,2])
